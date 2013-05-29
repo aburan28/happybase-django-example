@@ -144,7 +144,11 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
     },
     'loggers': {
         'django.request': {
@@ -152,5 +156,18 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'happybase': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'myproj': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        }
     }
 }
+
+
+# HBase settings
+HBASE_HOST = 'localhost'
+HBASE_TABLE = 'test_table'
