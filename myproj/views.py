@@ -16,6 +16,8 @@ N_KEYS = 10000
 #
 # Initialization
 #
+# Importing this module has side-effects; way to go Django. :s
+#
 
 pool = happybase.ConnectionPool(
     size=3,
@@ -54,8 +56,10 @@ def index(request):
         output = list(scan)
 
     if 'use-after-return' in request.GET:
-        # It is an error to use the connection after it was returned to
-        # the pool
+        # XXX: It is an error to use the connection after it was
+        # returned to the pool. The next line introduces a race
+        # condition and may cause random errors when used in
+        # a multi-threaded environment!
         connection.tables()
 
     logger.debug('Request from thread %s', threading.current_thread().name)
